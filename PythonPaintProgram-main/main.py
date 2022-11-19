@@ -1,5 +1,6 @@
 from utils import *
-from PIL import image
+from PIL import Image
+import numpy as np
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Drawing Program")
@@ -93,13 +94,24 @@ while run:
                         grid = init_grid(ROWS, COLS, BG_COLOR)
                         drawing_color = BLACK
 
-    draw(WIN, grid, buttons)
+draw(WIN, grid, buttons)
 
-    # Creates a random image 100*100 pixels
-    mat = np.random.random((100,100))
+# Creates a random image 100*100 
+for j in range(COLS):
+    for i in range(ROWS):
+        print(grid[j][i] == (255, 255, 255))
+        if grid[i][j] == (255, 255, 255):
+            grid[i][j] = 255
+        else:
+            grid[i][j] = 0
+            
 
-    # Creates PIL image
-    img = Image.fromarray(mat, 'L')
-    img.show()
+mat = np.array(grid)
+print(mat)
+
+# Creates PIL image
+img = Image.fromarray(mat)
+img.show()
+
 
 pygame.quit()
